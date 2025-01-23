@@ -9,11 +9,11 @@ void complexity_time(int array[], int size);
 
 int main(){
 
-    int n ;
+    unsigned long n ;
 
     printf("Enter the number of elements in the array: ");
 
-    scanf("%d", &n);
+    scanf("%lu", &n);
     printf("\n");
 
     int* array = (int*)malloc(n*sizeof(int));
