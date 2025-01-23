@@ -10,7 +10,7 @@ void complexity_time(int array[], int size);
 int main(){
 
     unsigned long n ;
-
+    //remove it
     printf("Enter the number of elements in the array: ");
 
     scanf("%lu", &n);
