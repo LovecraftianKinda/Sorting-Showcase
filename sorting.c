@@ -20,8 +20,9 @@ int main(){
     srand (time(0));
 
     for (int i = 0; i<n; i++){
-        array[i] = rand() % 1000;
+        array[i] = rand();
     }
+
 
     complexity_time(array, n);
 
