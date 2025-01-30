@@ -47,5 +47,5 @@ dll int* insertion_sort(int array[],int size){
 
 dll int* selection_sort(int array[], int size){
     
-    return 0;
+    return array;
 }
