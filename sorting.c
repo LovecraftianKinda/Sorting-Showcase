@@ -1,46 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-
-void print_array(int array[], int size);
-int* bubble_sort(int array[], int size);
-double time_taken(int array[], int size);
-void complexity_time(int array[], int size);
+#define dll __declspec(dllexport)
 
 int main(){
-
-    unsigned long n ;
-    //remove it
-    printf("Enter the number of elements in the array: ");
-
-    scanf("%lu", &n);
-    printf("\n");
-
-    int* array = (int*)malloc(n*sizeof(int));
-    srand (time(0));
-
-    for (int i = 0; i<n; i++){
-        array[i] = rand();
-    }
-
-
-    complexity_time(array, n);
-
-    free(array);
 
     return 0;
 }
 
-void print_array(int array[], int size){
-
-    printf("The array is: ");
-    for (int i = 0; i<size; i++){
-        printf("%d ", array[i]);
-    }
-    printf("\n\n");
-}
-
-int* bubble_sort(int array[],int size){
+dll int* bubble_sort(int array[],int size){
 
     int i, j, temp;
 
@@ -56,25 +23,4 @@ int* bubble_sort(int array[],int size){
 
     }
     return array;
-}
-
-double time_taken(int array[], int size){
-
-    clock_t start, end;
-    double cpu_time_used;
-
-    start = clock();
-    bubble_sort(array, size);
-    end = clock();
-
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-    return cpu_time_used;
-}
-
-void complexity_time(int array[], int size){
-
-    double time = time_taken(array, size);
-
-    printf("time taken: %fs\n", time);
 }
