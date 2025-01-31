@@ -5,10 +5,6 @@ import time
 
 dll = ctypes.CDLL(os.path.abspath("sorting.dll"))
 
-dll.free_memory.argtypes = [ctypes.POINTER(ctypes.c_int)]
-dll.free_memory.restype = None
-
-
 def template(func,array):
     
     func.argtypes = [ctypes.POINTER(ctypes.c_int), ctypes.c_int]
@@ -19,6 +15,8 @@ def template(func,array):
     time_end = abs(time.time() - time_start)
     sorted_array = [sorted_array_ptr[i] for i in range(len(array))]
     print(f"Time taken: {time_end}s in {func.__name__} and the sorted array is {sorted_array}")
+    
+    dll.free_memory(sorted_array_ptr)
     return sorted_array,time_end
 
 n = int(input("enter number :"))

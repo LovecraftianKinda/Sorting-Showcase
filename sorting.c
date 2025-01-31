@@ -6,10 +6,6 @@ int main(){
     return 0;
 }
 
-dll void free_memory(int* array) {
-    free(array);
-}
-
 dll int* bubble_sort(int array[],int size){
 
     int i, j, temp;
