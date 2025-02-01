@@ -9,11 +9,19 @@
 ## Sorting Algorithms
 
 1. **Bubble Sort**
+    - Average Time Complexity : O(n^2)
 2. **Selection Sort**
+    - Average Time Complexity : O(n^2)
 3. **Insertion Sort**
+    - Average Time Complexity : O(n^2)
 4. **Merge Sort**
+    - Average Time Complexity : O(n log(n))
 5. **Quick Sort**
+    - Average Time Complexity : O(n log(n))
 6. **Heap Sort**
+    - Average Time Complexity : O(n log(n))
+7. **Tim Sort**
+    - Average Time Complexity : O(n log(n))
 
 ## Visual Representation
 
