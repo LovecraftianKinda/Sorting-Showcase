@@ -12,6 +12,7 @@ dll int *insertion_sort(int array[], int size);
 dll int *selection_sort(int array[], int size);
 dll int *merge(int left_array[], int right_array[], int left_size, int right_size);
 dll int *merge_sort(int array[], int size);
+dll void partition(int array[], int min, int max);
 dll int *quick_sort(int array[], int size);
 
 int main()
@@ -196,6 +197,29 @@ dll int *merge_sort(int array[], int size)
     return array;
 }
 
+void partition(int array[], int min, int max)
+{
+    if (max > min)
+    {
+        int pivot = array[max], j = min - 1, temp;
+        for (int i = min; i <= max; i++)
+        {
+            if (array[i] <= pivot)
+            {
+                j++;
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+        temp = array[j + 1];
+        array[j + 1] = array[max];
+        array[max] = temp;
+        partition(array, min, j - 1);
+        partition(array, j + 1, max);
+    }
+}
+
 dll int *quick_sort(int array[], int size)
 {
     // Time complexity: O(nlogn)
@@ -204,79 +228,18 @@ dll int *quick_sort(int array[], int size)
         return NULL;
     }
     int *sorted_array = (int *)malloc(sizeof(int) * size);
+
     for (int i = 0; i < size; i++)
     {
         sorted_array[i] = array[i];
     }
+
     if (size == 1)
     {
         return sorted_array;
     }
-    int a = sorted_array[0];
-    int b = sorted_array[size - 1];
-    int c = sorted_array[size / 2];
 
-    int pivot = (a > b && b > c) || (c > b && b > a) ? size - 1 : (b > a && a > c) || (c > a && a > b) ? 0
-                                                                                                       : size / 2;
-
-    int *left_array = (int *)malloc(sizeof(int) * size);
-    int *right_array = (int *)malloc(sizeof(int) * size);
-
-    int left_i = 0;
-    int right_i = 0;
-
-    for (int i = 0; i < pivot; i++)
-    {
-        if (sorted_array[i] <= sorted_array[pivot])
-        {
-            left_array[left_i] = sorted_array[i];
-            left_i++;
-        }
-        else
-        {
-            right_array[right_i] = sorted_array[i];
-            right_i++;
-        }
-    }
-
-    for (int i = pivot + 1; i < size; i++)
-    {
-        if (sorted_array[i] <= sorted_array[pivot])
-        {
-            left_array[left_i] = sorted_array[i];
-            left_i++;
-        }
-        else
-        {
-            right_array[right_i] = sorted_array[i];
-            right_i++;
-        }
-    }
-
-    int *sorted_left = quick_sort(left_array, left_i);
-    int *sorted_right = quick_sort(right_array, right_i);
-
-    free(left_array);
-    free(right_array);
-
-    for (int i = 0; i < left_i; i++)
-    {
-        sorted_array[i] = sorted_left[i];
-    }
-
-    for (int i = 0; i < right_i; i++)
-    {
-        sorted_array[i + left_i] = sorted_right[i];
-    }
-
-    if (left_i > 1)
-    {
-        free(sorted_left);
-    }
-    if (right_i > 1)
-    {
-        free(sorted_right);
-    }
+    partition(sorted_array, 0, size - 1);
 
     return sorted_array;
 }
