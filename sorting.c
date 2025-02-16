@@ -294,4 +294,6 @@ dll int *heap_sort(int array[], int size)
         return NULL;
     }
     int *sorted_array = (int *)malloc(sizeof(int) * size);
+    
+    return sorted_array;
 }
