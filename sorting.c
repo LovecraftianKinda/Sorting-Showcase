@@ -2,11 +2,7 @@
 #include <stdlib.h>
 #define dll __declspec(dllexport)
 
-dll void free_array(int *array)
-{
-    free(array);
-}
-
+dll void free_array(int *array);
 dll int *bubble_sort(int array[], int size);
 dll int *insertion_sort(int array[], int size);
 dll int *selection_sort(int array[], int size);
@@ -14,11 +10,25 @@ dll int *merge(int left_array[], int right_array[], int left_size, int right_siz
 dll int *merge_sort(int array[], int size);
 dll void partition(int array[], int min, int max);
 dll int *quick_sort(int array[], int size);
+dll void heapify(int array[], int size, int i);
+dll void build_heap(int array[], int size);
+dll int *heap_sort(int array[], int size);
 
 int main()
-{
-
+{ // only for test case
+    int array[] = {2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6};
+    int size = sizeof(array) / sizeof(array[0]);
+    build_heap(array, size);
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d ", array[i]);
+    }
     return 0;
+}
+
+dll void free_array(int *array)
+{
+    free(array);
 }
 
 dll int *bubble_sort(int array[], int size)
@@ -242,4 +252,46 @@ dll int *quick_sort(int array[], int size)
     partition(sorted_array, 0, size - 1);
 
     return sorted_array;
+}
+
+void heapify(int array[], int size, int i)
+{
+    int left_child = i * 2 + 1;
+    int right_child = i * 2 + 2;
+    int min = i;
+    int temp;
+
+    if (left_child < size && array[left_child] < array[min])
+    {
+        min = left_child;
+    }
+    if (right_child < size && array[right_child] < array[min])
+    {
+        min = right_child;
+    }
+    if (min != i)
+    {
+        temp = array[min];
+        array[min] = array[i];
+        array[i] = temp;
+        heapify(array, size, min);
+    }
+}
+
+void build_heap(int array[], int size)
+{
+    for (int i = size / 2 - 1; i >= 0; i--)
+    {
+        heapify(array, size, i);
+    }
+}
+
+dll int *heap_sort(int array[], int size)
+{
+    // Time complexity: O(nlogn)
+    if (size == 0)
+    {
+        return NULL;
+    }
+    int *sorted_array = (int *)malloc(sizeof(int) * size);
 }
