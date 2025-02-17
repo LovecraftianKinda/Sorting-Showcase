@@ -9,19 +9,19 @@
 ## Sorting Algorithms
 
 1. **Bubble Sort**
-    - Average Time Complexity : O(n^2)
+    - Average Time Complexity : O(n^2) ~ bad one
 2. **Selection Sort**
-    - Average Time Complexity : O(n^2)
+    - Average Time Complexity : O(n^2) ~ better than bubble sort
 3. **Insertion Sort**
-    - Average Time Complexity : O(n^2)
+    - Average Time Complexity : O(n^2) ~ about as good as selection sort but stable too
 4. **Merge Sort**
-    - Average Time Complexity : O(n log(n))
+    - Average Time Complexity : O(n log(n)) ~ divide and conquer algorithm that divides the array in half recursively and merges the subarrays sorting them in the process
 5. **Quick Sort**
-    - Average Time Complexity : O(n log(n))
+    - Average Time Complexity : O(n log(n)) ~ uses a pivot to divide and conquer
 6. **Heap Sort**
-    - Average Time Complexity : O(n log(n))
-7. **Tim Sort**
-    - Average Time Complexity : O(n log(n))
+    - Average Time Complexity : O(n log(n)) ~ uses the heap data structure to sort the array
+7. **Counting Sort**
+    - Average Time Complexity : O(n + k) ~ for integers only
 
 ## Visual Representation
 
@@ -32,10 +32,9 @@
 ## Performance Comparison
 
 - Measure the time complexity of each algorithm.
-- Compare the number of comparisons and swaps.
+- Plot the time complexity graph for each algorithm.
 - Analyze the best, average, and worst-case scenarios for each algorithm.
 
 ## Conclusion
 
-- Summarize the strengths and weaknesses of each sorting algorithm.
 - Provide recommendations for which algorithms to use in different scenarios.
