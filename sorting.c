@@ -18,10 +18,10 @@ int main()
 { // only for test case
     int array[] = {2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6};
     int size = sizeof(array) / sizeof(array[0]);
-    build_heap(array, size);
+    int *sorted_array = heap_sort(array, size);
     for (int i = 0; i < size; i++)
     {
-        printf("%d ", array[i]);
+        printf("%d ", sorted_array[i]);
     }
     return 0;
 }
@@ -258,23 +258,23 @@ void heapify(int array[], int size, int i)
 {
     int left_child = i * 2 + 1;
     int right_child = i * 2 + 2;
-    int min = i;
+    int max = i;
     int temp;
 
-    if (left_child < size && array[left_child] < array[min])
+    if (left_child < size && array[left_child] > array[max])
     {
-        min = left_child;
+        max = left_child;
     }
-    if (right_child < size && array[right_child] < array[min])
+    if (right_child < size && array[right_child] > array[max])
     {
-        min = right_child;
+        max = right_child;
     }
-    if (min != i)
+    if (max != i)
     {
-        temp = array[min];
-        array[min] = array[i];
+        temp = array[max];
+        array[max] = array[i];
         array[i] = temp;
-        heapify(array, size, min);
+        heapify(array, size, max);
     }
 }
 
@@ -294,6 +294,21 @@ dll int *heap_sort(int array[], int size)
         return NULL;
     }
     int *sorted_array = (int *)malloc(sizeof(int) * size);
-    
+
+    for (int i = 0; i < size; i++)
+    {
+        sorted_array[i] = array[i];
+    }
+
+    build_heap(sorted_array, size);
+
+    for (int i = size - 1; i > 0; i--)
+    {
+        int temp = sorted_array[0];
+        sorted_array[0] = sorted_array[i];
+        sorted_array[i] = temp;
+        heapify(sorted_array, i, 0);
+    }
+
     return sorted_array;
 }
