@@ -13,12 +13,14 @@ dll int *quick_sort(int array[], int size);
 dll void heapify(int array[], int size, int i);
 dll void build_heap(int array[], int size);
 dll int *heap_sort(int array[], int size);
+dll int *tim_sort(int array[], int size);
+dll int *counting_sort(int array[], int size);
 
 int main()
 { // only for test case
     int array[] = {2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6};
     int size = sizeof(array) / sizeof(array[0]);
-    int *sorted_array = heap_sort(array, size);
+    int *sorted_array = counting_sort(array, size);
     for (int i = 0; i < size; i++)
     {
         printf("%d ", sorted_array[i]);
@@ -325,6 +327,48 @@ dll int *heap_sort(int array[], int size)
         sorted_array[i] = temp;
         heapify(sorted_array, i, 0);
     }
+
+    return sorted_array;
+}
+
+dll int *counting_sort(int array[], int size)
+{
+    // Time complexity: O(n)
+    if (size == 0)
+    {
+        return NULL;
+    }
+
+    int *sorted_array = (int *)malloc(sizeof(int) * size);
+
+    int max = array[0];
+    for (int i = 1; i < size; i++)
+    {
+        if (array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+
+    int *counting_array = (int *)calloc(sizeof(int), (max + 1));
+
+    for (int i = 0; i < size; i++)
+    {
+        counting_array[array[i]]++;
+    }
+
+    int index = 0;
+
+    for (int i = 0; i <= max; i++)
+    {
+        for (int j = 0; j < counting_array[i]; j++)
+        {
+            sorted_array[index] = i;
+            index++;
+        }
+    }
+
+    free(counting_array);
 
     return sorted_array;
 }
