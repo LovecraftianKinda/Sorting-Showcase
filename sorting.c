@@ -38,12 +38,16 @@ dll int *bubble_sort(int array[], int size)
     {
         return NULL;
     }
+
     int *sorted_array = (int *)malloc(size * sizeof(int));
+
     for (int i = 0; i < size; i++)
     {
         sorted_array[i] = array[i];
     }
+
     int temp, flag = 1;
+
     for (int i = 0; i < size; i++)
     {
         if (flag == 0)
@@ -72,12 +76,16 @@ dll int *insertion_sort(int array[], int size)
     {
         return NULL;
     }
+
     int *sorted_array = (int *)malloc(size * sizeof(int));
+
     for (int i = 0; i < size; i++)
     {
         sorted_array[i] = array[i];
     }
+
     int temp;
+
     for (int i = 1; i < size; i++)
     {
         for (int j = i; j > 0; j--)
@@ -104,12 +112,16 @@ dll int *selection_sort(int array[], int size)
     {
         return NULL;
     }
+
     int *sorted_array = (int *)malloc(size * sizeof(int));
+
     for (int i = 0; i < size; i++)
     {
         sorted_array[i] = array[i];
     }
+
     int min, temp;
+
     for (int i = 0; i < size; i++)
     {
         min = i;
@@ -133,7 +145,9 @@ dll int *selection_sort(int array[], int size)
 int *merge(int left_array[], int right_array[], int left_size, int right_size)
 {
     int *sorted_array = (int *)malloc(sizeof(int) * (left_size + right_size));
+
     int i = 0, j = 0, k = 0;
+
     while (i < left_size && j < right_size)
     {
         if (left_array[i] <= right_array[j])
@@ -148,11 +162,13 @@ int *merge(int left_array[], int right_array[], int left_size, int right_size)
         }
         k++;
     }
+
     for (; i < left_size; i++)
     {
         sorted_array[k] = left_array[i];
         k++;
     }
+
     for (; j < right_size; j++)
     {
         sorted_array[k] = right_array[j];
