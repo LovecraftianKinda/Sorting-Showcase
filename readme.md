@@ -21,7 +21,9 @@
 6. **Heap Sort**
     - Average Time Complexity : O(n log(n)) ~ uses the heap data structure to sort the array
 7. **Counting Sort**
-    - Average Time Complexity : O(n + k) ~ for integers only
+    - Average Time Complexity : O(n + k) ~ for integers only, fast as fuck
+8. **Radix Sort**
+    - Average Time Complexity : O(nk) ~ looks pretty neat, integers only
 
 ## Visual Representation
 
