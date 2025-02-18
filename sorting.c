@@ -15,12 +15,13 @@ dll void build_heap(int array[], int size);
 dll int *heap_sort(int array[], int size);
 dll int *tim_sort(int array[], int size);
 dll int *counting_sort(int array[], int size);
+dll int *radix_sort(int array[], int size);
 
 int main()
-{ // only for test case
-    int array[] = {2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6};
+{ // only for testing UwU
+    int array[] = {2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6, 23};
     int size = sizeof(array) / sizeof(array[0]);
-    int *sorted_array = counting_sort(array, size);
+    int *sorted_array = radix_sort(array, size);
     for (int i = 0; i < size; i++)
     {
         printf("%d ", sorted_array[i]);
@@ -36,6 +37,7 @@ dll void free_array(int *array)
 dll int *bubble_sort(int array[], int size)
 {
     // Time complexity: O(n^2)
+    // boo boring
     if (size == 0)
     {
         return NULL;
@@ -147,7 +149,8 @@ dll int *selection_sort(int array[], int size)
 int *merge(int left_array[], int right_array[], int left_size, int right_size)
 {
     int *sorted_array = (int *)malloc(sizeof(int) * (left_size + right_size));
-
+    // i love this beauty, sorting algorithm if we talk about elegance
+    // this algo is akin to your fat little sister who eats leftovers like a hog
     int i = 0, j = 0, k = 0;
 
     while (i < left_size && j < right_size)
@@ -226,9 +229,12 @@ dll int *merge_sort(int array[], int size)
 }
 
 void partition(int array[], int min, int max)
-{
+{ // the real magic happens here
     if (max > min)
-    {
+    { // set a pivot and if elements are bigger than that thing boom to the right of it
+        // otherwise to the left
+        // divide it into smaller sub arrays in place and do the same to them until the base case
+        // and boom you have a sorted array
         int pivot = array[max], j = min - 1, temp;
         for (int i = min; i <= max; i++)
         {
@@ -266,7 +272,7 @@ dll int *quick_sort(int array[], int size)
     {
         return sorted_array;
     }
-
+    // nothing to see here
     partition(sorted_array, 0, size - 1);
 
     return sorted_array;
@@ -274,6 +280,7 @@ dll int *quick_sort(int array[], int size)
 
 void heapify(int array[], int size, int i)
 {
+    // easy way to convert an innocent array into a vicious log time heap
     int left_child = i * 2 + 1;
     int right_child = i * 2 + 2;
     int max = i;
@@ -333,13 +340,18 @@ dll int *heap_sort(int array[], int size)
 
 dll int *counting_sort(int array[], int size)
 {
-    // Time complexity: O(n)
+    // Time complexity: O(n+k)
     if (size == 0)
     {
         return NULL;
     }
 
     int *sorted_array = (int *)malloc(sizeof(int) * size);
+
+    for (int i = 0; i < size; i++)
+    {
+        sorted_array[i] = array[i];
+    }
 
     int max = array[0];
     for (int i = 1; i < size; i++)
@@ -350,7 +362,7 @@ dll int *counting_sort(int array[], int size)
         }
     }
 
-    int *counting_array = (int *)calloc(sizeof(int), (max + 1));
+    int *counting_array = (int *)calloc((max + 1), sizeof(int));
 
     for (int i = 0; i < size; i++)
     {
@@ -370,5 +382,66 @@ dll int *counting_sort(int array[], int size)
 
     free(counting_array);
 
+    return sorted_array;
+}
+
+dll int *radix_sort(int array[], int size)
+{
+    // Time complexity: O(nk)
+    if (size == 0)
+    {
+        return NULL;
+    }
+
+    int *sorted_array = (int *)malloc(sizeof(int) * size);
+
+    int max = array[0];
+    for (int i = 1; i < size; i++)
+    {
+        if (array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+
+    int exp = 1;
+
+    while (max / exp > 0)
+    {
+        int *counting_array = (int *)calloc(10, sizeof(int));
+
+        for (int i = 0; i < size; i++)
+        {
+            counting_array[(array[i] / exp) % 10]++;
+        }
+
+        for (int i = 1; i < 10; i++)
+        {
+            // adding this way and storing gives on which index should the "digit" end
+            counting_array[i] += counting_array[i - 1];
+        }
+
+        for (int i = size - 1; i >= 0; i--)
+        {
+            /*doing it in reverse makes sure the count is decreased and the new index-
+            -for that unit or whatever placed digit is in the right place
+            */
+            int digit = (array[i] / exp) % 10;
+            sorted_array[counting_array[digit] - 1] = array[i];
+            // we decrease 1 because the index is +1 of what it should be
+            counting_array[digit]--;
+        }
+
+        for (int i = 0; i < size; i++)
+        {
+            // copying it after each run so that the thing can be done again on a semi sorted list
+            // of course on a different digit so we do exp*= 10
+            array[i] = sorted_array[i];
+        }
+
+        exp *= 10;
+
+        free(counting_array);
+    }
     return sorted_array;
 }
