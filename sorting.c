@@ -149,7 +149,7 @@ dll int *selection_sort(int array[], int size)
 int *merge(int left_array[], int right_array[], int left_size, int right_size)
 {
     int *sorted_array = (int *)malloc(sizeof(int) * (left_size + right_size));
-    // i love this beauty, sorting algorithm if we talk about elegance
+    // i love this beauty, the best sorting algorithm if we talk about elegance
     // this algo is akin to your fat little sister who eats leftovers like a hog
     int i = 0, j = 0, k = 0;
 
