@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #define dll __declspec(dllexport)
 
 dll void free_array(int *array);
@@ -16,12 +17,13 @@ dll int *heap_sort(int array[], int size);
 dll int *tim_sort(int array[], int size);
 dll int *counting_sort(int array[], int size);
 dll int *radix_sort(int array[], int size);
+dll int *bucket_sort(int array[], int size);
 
 int main()
 { // only for testing UwU
     int array[] = {2, 3, 5, 6, 8, 9, 1, 2, 3, 5, 6, 23};
     int size = sizeof(array) / sizeof(array[0]);
-    int *sorted_array = radix_sort(array, size);
+    int *sorted_array = bucket_sort(array, size);
     for (int i = 0; i < size; i++)
     {
         printf("%d ", sorted_array[i]);
@@ -443,5 +445,71 @@ dll int *radix_sort(int array[], int size)
 
         free(counting_array);
     }
+    return sorted_array;
+}
+
+dll int *bucket_sort(int array[], int size)
+{ // Time complexity : O(n+k) or O(n+10) in this context
+    // Worst case case be O(n^2) as this thing relies on insertion sort
+    if (size == 0)
+    {
+        return NULL;
+    }
+
+    int *sorted_array = (int *)malloc(size * sizeof(int));
+    int **bucket = (int **)malloc(10 * sizeof(int *));
+    int *bucket_size = (int *)calloc(10, sizeof(int));
+
+    int max = array[0];
+    for (int i = 1; i < size; i++)
+    {
+        if (array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        bucket[i] = (int *)malloc(size * sizeof(int));
+    }
+
+    for (int i = 0; i < size; i++)
+    { /*this division is just floor division so we have to sadly do the float thingy then back to int
+      if the darn thing array[i] == max *perchance* it should be put back in its place to 9
+      we do not have any index 10 at our disposal*/
+        int factor = (int)(((float)array[i] / max) * 10);
+        if (factor == 10)
+            factor = 9;
+        bucket[factor][bucket_size[factor]] = array[i];
+        bucket_size[factor]++;
+    }
+
+    for (int i = 0; i < 10; i++)
+    { /*i can write 10 separate functions to test which one is best but i am lazy
+      so i will just use radix sort
+      i am a fool*/
+        bucket[i] = radix_sort(bucket[i], bucket_size[i]);
+    }
+
+    int index = 0;
+
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < bucket_size[i]; j++)
+        {
+            sorted_array[index] = bucket[i][j];
+            index++;
+        }
+    }
+
+    for (int i = 0; i < 10; i++)
+    {
+        free(bucket[i]);
+    }
+
+    free(bucket);
+    free(bucket_size);
+
     return sorted_array;
 }
