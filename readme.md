@@ -24,6 +24,8 @@
     - Average Time Complexity : O(n + k) ~ for integers only, fast as fuck
 8. **Radix Sort**
     - Average Time Complexity : O(nk) ~ looks pretty neat, integers only
+9. **Bucket Sort**
+    - Average Time Complexity : O(n+k) ~ where k is the number of buckets
 
 ## Visual Representation
 
